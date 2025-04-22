@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Snake Water Gun Game</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #c2e9fb, #a1c4fd);
+      text-align: center;
+      padding: 50px;
+      animation: fadeInBody 1.2s ease;
+    }
+
+    @keyframes fadeInBody {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-size: 42px;
+      color: #222;
+      margin-bottom: 30px;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .btn {
+      padding: 18px 30px;
+      margin: 15px;
+      font-size: 22px;
+      border: none;
+      border-radius: 15px;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.3s ease;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn:hover {
+      background-color: #388e3c;
+    }
+
+    .btn:active {
+      transform: scale(0.92);
+    }
+
+    #result {
+      margin-top: 40px;
+      font-size: 24px;
+      color: #333;
+      white-space: pre-line;
+      opacity: 0;
+      animation: fadeIn 0.8s forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>🐍💧🔫 Snake Water Gun Game</h1>
+
+  <button class="btn" onclick="play('snake')">🐍 Snake</button>
+  <button class="btn" onclick="play('water')">💧 Water</button>
+  <button class="btn" onclick="play('gun')">🔫 Gun</button>
+
+  <div id="result"></div>
+
+  <script>
+    function play(userChoice) {
+      const choices = ['snake', 'water', 'gun'];
+      const computerChoice = choices[Math.floor(Math.random() * choices.length)];
+
+      let resultText = '';
+
+      if (userChoice === computerChoice) {
+        resultText = "🤝 It's a draw!";
+      } else if (
+        (userChoice === 'snake' && computerChoice === 'water') ||
+        (userChoice === 'gun' && computerChoice === 'snake') ||
+        (userChoice === 'water' && computerChoice === 'gun')
+      ) {
+        resultText = `🎉 You win!\n${userChoice} beats ${computerChoice}`;
+      } else {
+        resultText = `😢 You lose!\n${computerChoice} beats ${userChoice}`;
+      }
+
+      const resultDiv = document.getElementById('result');
+      resultDiv.style.opacity = 0; // reset animation
+      void resultDiv.offsetWidth; // reflow to restart animation
+      resultDiv.innerText = `You chose: ${userChoice} \nComputer chose: ${computerChoice} \n\n${resultText}`;
+      resultDiv.style.animation = 'fadeIn 0.8s forwards';
+    }
+  </script>
+</body>
+</html>
